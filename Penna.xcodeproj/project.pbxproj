@@ -18,6 +18,8 @@
 		033137CF2C1BF5B900CE3DE0 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 033137CE2C1BF5B900CE3DE0 /* Starfield.sks */; };
 		033137D12C1BF7BF00CE3DE0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033137D02C1BF7BF00CE3DE0 /* GameScene.swift */; };
 		033137D32C1C053100CE3DE0 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033137D22C1C053100CE3DE0 /* MenuScene.swift */; };
+		0367BEDE2C1EA0E100B17441 /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0367BEDD2C1EA0E100B17441 /* DrawingViewController.swift */; };
+		0367BEE02C1EB07500B17441 /* LevelDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0367BEDF2C1EB07500B17441 /* LevelDictionary.swift */; };
 		03A1D7172C1D503B0051C0F6 /* GameAssetsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A1D7162C1D503B0051C0F6 /* GameAssetsBuilder.swift */; };
 		03A1D7192C1D64660051C0F6 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A1D7182C1D64660051C0F6 /* CanvasView.swift */; };
 		03A1D73B2C1D8ACE0051C0F6 /* EnemiesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A1D73A2C1D8ACE0051C0F6 /* EnemiesType.swift */; };
@@ -36,6 +38,8 @@
 		033137CE2C1BF5B900CE3DE0 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		033137D02C1BF7BF00CE3DE0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		033137D22C1C053100CE3DE0 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		0367BEDD2C1EA0E100B17441 /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
+		0367BEDF2C1EB07500B17441 /* LevelDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDictionary.swift; sourceTree = "<group>"; };
 		03A1D7162C1D503B0051C0F6 /* GameAssetsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAssetsBuilder.swift; sourceTree = "<group>"; };
 		03A1D7182C1D64660051C0F6 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		03A1D73A2C1D8ACE0051C0F6 /* EnemiesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemiesType.swift; sourceTree = "<group>"; };
@@ -75,7 +79,9 @@
 				033137B42C1B26C500CE3DE0 /* Actions.sks */,
 				033137B82C1B26C500CE3DE0 /* GameViewController.swift */,
 				033137D02C1BF7BF00CE3DE0 /* GameScene.swift */,
+				0367BEDD2C1EA0E100B17441 /* DrawingViewController.swift */,
 				03A1D73A2C1D8ACE0051C0F6 /* EnemiesType.swift */,
+				0367BEDF2C1EB07500B17441 /* LevelDictionary.swift */,
 				03A1D7162C1D503B0051C0F6 /* GameAssetsBuilder.swift */,
 				033137C92C1B28B900CE3DE0 /* Game */,
 				033137BA2C1B26C500CE3DE0 /* Main.storyboard */,
@@ -172,7 +178,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0367BEE02C1EB07500B17441 /* LevelDictionary.swift in Sources */,
 				033137B92C1B26C500CE3DE0 /* GameViewController.swift in Sources */,
+				0367BEDE2C1EA0E100B17441 /* DrawingViewController.swift in Sources */,
 				03A1D7172C1D503B0051C0F6 /* GameAssetsBuilder.swift in Sources */,
 				03A1D7192C1D64660051C0F6 /* CanvasView.swift in Sources */,
 				03A1D73B2C1D8ACE0051C0F6 /* EnemiesType.swift in Sources */,
