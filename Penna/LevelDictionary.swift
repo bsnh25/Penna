@@ -1,5 +1,5 @@
 //
-//  LevelDictionary.swift
+//  LevelDictionaryEnum.swift
 //  Penna
 //
 //  Created by Bayu Septyan Nur Hidayat on 16/06/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LevelDictionary: Int16, CaseIterable {
+enum LevelDictionaryEnum: Int16, CaseIterable {
     case level_1
     case level_2
     case level_3

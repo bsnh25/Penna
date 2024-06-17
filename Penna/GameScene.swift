@@ -10,41 +10,31 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var gameTimer: Timer?
+    var gameVM = GameViewModel()
     var player: SKSpriteNode!
-    var sentences: [String] = []
-//    var currentWordIndex = 0
-    
     var drawingViewController: DrawingViewController?
     var backgroundPosition : CGFloat = 0
     
-    var currentLevel: LevelDictionary = .level_1
-    var currentStrokeType: StrokeType = .oneStroke // Default stroke type for level 2
-    
-    
     override func didMove(to view: SKView) {
         
-        // Initialize DrawingViewController
         drawingViewController = DrawingViewController()
         
-        if let drawingVC = drawingViewController {
-            drawingVC.view.frame = self.view!.bounds
-            drawingVC.view.backgroundColor = .clear
-            
-            // Add DrawingViewController's view as a subview of SKView
-            self.view?.addSubview(drawingVC.view)
+        if let skView = self.view {
+            if let drawingVC = drawingViewController {
+                drawingVC.view.frame = skView.bounds
+                drawingVC.view.backgroundColor = .clear
+                self.view?.addSubview(drawingVC.view)
+            }
         }
         
         setupBackground()
         setupPlayer()
         setupPortal()
-        setupSentences()
+        gameVM.setupSentences()
         
-        gameTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(makeEnemies), userInfo: nil, repeats: true)
+        gameVM.gameTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(makeEnemies), userInfo: nil, repeats: true)
         
     }
-    
-    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
@@ -53,17 +43,11 @@ class GameScene: SKScene {
     func setupBackground(){
         let background = SKSpriteNode(imageNamed: "classRoom")
         backgroundPosition = drawingViewController?.canvasHeight ?? size.height*1/3
-        
         background.anchorPoint = CGPoint(x: 0, y: 0)
         background.zPosition = -1
         background.size = CGSize(width: size.width, height: size.height - backgroundPosition)
         background.position = CGPoint(x: 0, y: backgroundPosition)
-        
         addChild(background)
-        
-        print(size.height)
-        print((size.height-(drawingViewController?.canvasHeight ?? size.height * 1/3)))
-        print(size.width)
     }
     
     func setupPlayer(){
@@ -82,31 +66,15 @@ class GameScene: SKScene {
         addChild(portal)
     }
     
-    func setupSentences() {
-        switch currentLevel {
-        case .level_1, .level_3, .level_4, .level_5, .level_6:
-            sentences = currentLevel.term
-        case .level_2:
-            sentences = currentLevel.terms(for: currentStrokeType)
-        }
-    }
-    
     @objc func makeEnemies() {
-        //        guard currentWordIndex < sentences.count else {
-        //            gameTimer?.invalidate()
-        //            return
-        //        }
         
-        guard !sentences.isEmpty else {
-            gameTimer?.invalidate()
+        guard !gameVM.sentences.isEmpty else {
+            gameVM.gameTimer?.invalidate()
             return
         }
+        let wordEnemy = gameVM.generateWordEnemy()
         
-        let randomIndex = Int.random(in: 0..<sentences.count)
-        let word = sentences[randomIndex]
-//        currentWordIndex += 1
-        
-        let sprite = SKLabelNode(text: word)
+        let sprite = SKLabelNode(text: wordEnemy)
         sprite.fontName = "Arial"
         sprite.fontSize = 24
         sprite.fontColor = SKColor.black
@@ -127,8 +95,33 @@ class GameScene: SKScene {
     }
 }
 
-// <! Ini Enemy Balok>
+//extension GameScene: ShootProtocol {
+//    func shootTheText(_ text: String) {
+//        // Create an enemy label node
+//        let enemy = SKLabelNode(text: text)
+//        enemy.fontName = "Arial"
+//        enemy.fontSize = 24
+//        enemy.fontColor = .black
+//        enemy.position = CGPoint(x: size.width - 100, y: CGFloat.random(in: size.height / 2...size.height))
+//        enemy.name = "enemy"
+//        enemy.zPosition = 1
+//        addChild(enemy)
+//
+//        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.frame.size)
+//        enemy.physicsBody?.affectedByGravity = false
+//        enemy.physicsBody?.linearDamping = 0
+//
+//        // Calculate direction towards the player
+//        let direction = CGVector(dx: player.position.x - enemy.position.x, dy: player.position.y - enemy.position.y)
+//        let length = sqrt(direction.dx * direction.dx + direction.dy * direction.dy)
+//        let normalizedDirection = CGVector(dx: direction.dx / length, dy: direction.dy / length)
+//        let speed: CGFloat = 200.0
+//        enemy.physicsBody?.velocity = CGVector(dx: normalizedDirection.dx * speed, dy: normalizedDirection.dy * speed)
+//    }
+//}
 
+
+// <! Ini Enemy Balok>
 //    @objc func makeEnemies() {
 //        let enemy = SKSpriteNode(imageNamed: "block")
 //        enemy.position = CGPoint(x: Int(size.width-100), y: Int.random(in: Int(size.height / 2)...Int(size.height)))
