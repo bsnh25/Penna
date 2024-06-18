@@ -31,14 +31,6 @@ class GameViewController: UIViewController {
         }
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return .landscape
-        } else {
-            return .landscape
-        }
-    }
-
     override var prefersStatusBarHidden: Bool {
         return true
     }
