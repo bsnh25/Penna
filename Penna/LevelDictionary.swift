@@ -58,6 +58,17 @@ enum LevelDictionaryEnum: Int16, CaseIterable {
             return []
         }
     }
+    
+    var maxScore: Int {
+        switch self {
+        case .level_1, .level_2, .level_3:
+            return 60
+        case .level_4, .level_5:
+            return 40
+        case .level_6:
+            return 20
+        }
+    }
 }
 
 enum StrokeType: String, CaseIterable {

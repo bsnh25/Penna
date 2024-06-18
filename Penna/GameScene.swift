@@ -32,6 +32,11 @@ class GameScene: SKScene {
         setupPlayer()
         setupPortal()
         gameVM.setupSentences()
+        gameVM.setupMaxPoint()
+        
+        if gameVM.isContinueLevel {
+            drawingViewController?.setupContinueButton(in: view)
+        }
         
         gameVM.gameTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(makeEnemies), userInfo: nil, repeats: true)
         
@@ -66,13 +71,16 @@ class GameScene: SKScene {
         portal.position = CGPoint(x: size.width - 100, y: size.height - backgroundPosition)
         addChild(portal)
     }
+
     
     @objc func makeEnemies() {
+        
         
         guard !gameVM.sentences.isEmpty else {
             gameVM.gameTimer?.invalidate()
             return
         }
+        
         
         let wordEnemy = gameVM.generateWordEnemy()
         

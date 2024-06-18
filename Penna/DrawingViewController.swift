@@ -11,15 +11,14 @@ import SpriteKit
 
 class DrawingViewController: UIViewController, PKCanvasViewDelegate {
     
-    
     var gameVM = GameViewModel()
     weak var delegate : ShootProtocol?
     let canvasView = PKCanvasView()
     var canvasHeight: CGFloat?
     var hiddenTextField: UITextField?
     var scoreLabel: UILabel?
+    var continueButton: UIButton?
     var enemy: [String] = []
-    
     
     let canvasViewID = UUID().uuidString
     
@@ -27,6 +26,7 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
         super.viewDidLoad()
         
         gameVM.setupSentences()
+        gameVM.setupMaxPoint()
         // Setup canvas view
         canvasHeight = view.bounds.height*1/3
         
@@ -76,6 +76,26 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
         }
     }
     
+    func setupContinueButton(in view: UIView) {
+        continueButton = UIButton(frame: CGRect(x: Int(view.bounds.width-100), y: Int(view.bounds.height-450), width: 80, height: 80))
+        
+        // Menggunakan SF Symbol sebagai teks
+        let symbolName = "play.circle.fill" // Ganti dengan symbol SF yang diinginkan
+        let configuration = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold) // Konfigurasi symbol
+        let symbolImage = UIImage(systemName: symbolName, withConfiguration: configuration) // Membuat gambar symbol
+        
+        continueButton?.setImage(symbolImage, for: .normal) // Menetapkan gambar symbol ke button
+        continueButton?.tintColor = .white // Mengatur warna symbol
+        
+        continueButton?.backgroundColor = .blue
+        continueButton?.layer.cornerRadius = 40 // Membuat button bundar
+        continueButton?.layer.masksToBounds = true // Memastikan gambar tidak terlalu melebihi batas button
+        
+        if let subView = continueButton {
+            view.addSubview(subView)
+        }
+    }
+    
     @objc
     func handleTextFieldDidChange(_ textField: UITextField) {
         print("Written text: \(textField.text ?? "")")
@@ -106,6 +126,12 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
     
     private func refreshScore() {
         scoreLabel?.text = "Correct: \(gameVM.currentScore)"
+        gameVM.continueLevel()
+        print(gameVM.isContinueLevel)
+        
+        if gameVM.isContinueLevel {
+            setupContinueButton(in: view)
+        }
     }
     
 }

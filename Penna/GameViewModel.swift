@@ -13,7 +13,9 @@ class GameViewModel: ObservableObject {
     @Published var currentLevel: LevelDictionaryEnum = .level_1
     @Published var currentStrokeType: StrokeType = .oneStroke
     @Published var currentScore: Int = 0
+    @Published var maximumWord: Int = 0
     @Published var arrWordEnemy: [String] = []
+    @Published var isContinueLevel: Bool = false
     var word: String = ""
     var gameTimer: Timer?
     var writingState: WritingStateEnum = .standBy
@@ -24,6 +26,13 @@ class GameViewModel: ObservableObject {
             sentences = currentLevel.term
         case .level_2:
             sentences = currentLevel.terms(for: currentStrokeType)
+        }
+    }
+
+    func setupMaxPoint() {
+        switch currentLevel {
+        case .level_1, .level_2, .level_3, .level_4, .level_5, .level_6:
+            maximumWord = currentLevel.maxScore
         }
     }
     
@@ -51,5 +60,15 @@ class GameViewModel: ObservableObject {
             print("\(enemy) not found in sentences")
         }
     }
+    
+    func continueLevel(){
+        if currentScore > (maximumWord * 2/3){
+            isContinueLevel = true
+        } else {
+            isContinueLevel = false
+        }
+    }
+    
+    
     
 }
