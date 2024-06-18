@@ -13,6 +13,8 @@ class GameViewModel: ObservableObject {
     @Published var currentLevel: LevelDictionaryEnum = .level_1
     @Published var currentStrokeType: StrokeType = .oneStroke
     @Published var currentScore: Int = 0
+    @Published var arrWordEnemy: [String] = []
+    var word: String = ""
     var gameTimer: Timer?
     var writingState: WritingStateEnum = .standBy
     
@@ -27,10 +29,27 @@ class GameViewModel: ObservableObject {
     
     func generateWordEnemy() -> String {
         let randomIndex = Int.random(in: 0..<sentences.count)
-        let word = sentences[randomIndex]
+        word = sentences[randomIndex]
+        arrWordEnemy.append(word)
         return word
     }
-
     
+    func refreshWordEnemy(completion: @escaping ([String]) -> Void) {
+        completion(arrWordEnemy)
+    }
+    
+    func removeEnemy(for enemy: String) {
+        print("Attempting to shoot text: \(enemy)")
+        print("enemy array: \(arrWordEnemy)")
+        
+        if arrWordEnemy.contains(enemy) {
+            print("Found \(enemy) in array")
+            arrWordEnemy.removeAll { $0 == enemy }
+            currentScore += 1
+            print("Current score: \(currentScore)")
+        } else {
+            print("\(enemy) not found in sentences")
+        }
+    }
     
 }

@@ -23,6 +23,7 @@ class GameScene: SKScene {
             if let drawingVC = drawingViewController {
                 drawingVC.view.frame = skView.bounds
                 drawingVC.view.backgroundColor = .clear
+                drawingVC.gameVM = gameVM
                 self.view?.addSubview(drawingVC.view)
             }
         }
@@ -72,26 +73,27 @@ class GameScene: SKScene {
             gameVM.gameTimer?.invalidate()
             return
         }
+        
         let wordEnemy = gameVM.generateWordEnemy()
         
-        let sprite = SKLabelNode(text: wordEnemy)
-        sprite.fontName = "Arial"
-        sprite.fontSize = 24
-        sprite.fontColor = SKColor.black
-        sprite.position = CGPoint(x: size.width - 100, y: CGFloat.random(in: size.height / 2...size.height))
-        sprite.name = "enemy"
-        sprite.zPosition = 1
-        addChild(sprite)
+        let enemy = SKLabelNode(text: wordEnemy)
+        enemy.fontName = "Arial"
+        enemy.fontSize = 24
+        enemy.fontColor = SKColor.black
+        enemy.position = CGPoint(x: size.width - 100, y: CGFloat.random(in: size.height / 2...size.height))
+        enemy.name = "enemy"
+        enemy.zPosition = 1
+        addChild(enemy)
         
-        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.frame.size)
-        sprite.physicsBody?.affectedByGravity = false
-        sprite.physicsBody?.linearDamping = 0
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.frame.size)
+        enemy.physicsBody?.affectedByGravity = false
+        enemy.physicsBody?.linearDamping = 0
         
-        let direction = CGVector(dx: player.position.x - sprite.position.x, dy: player.position.y - sprite.position.y)
+        let direction = CGVector(dx: player.position.x - enemy.position.x, dy: player.position.y - enemy.position.y)
         let length = sqrt(direction.dx * direction.dx + direction.dy * direction.dy)
         let normalizedDirection = CGVector(dx: direction.dx / length, dy: direction.dy / length)
         let speed: CGFloat = 200.0
-        sprite.physicsBody?.velocity = CGVector(dx: normalizedDirection.dx * speed, dy: normalizedDirection.dy * speed)
+        enemy.physicsBody?.velocity = CGVector(dx: normalizedDirection.dx * speed, dy: normalizedDirection.dy * speed)
     }
 }
 

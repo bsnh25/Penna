@@ -11,12 +11,14 @@ import SpriteKit
 
 class DrawingViewController: UIViewController, PKCanvasViewDelegate {
     
+    
     var gameVM = GameViewModel()
     weak var delegate : ShootProtocol?
     let canvasView = PKCanvasView()
     var canvasHeight: CGFloat?
     var hiddenTextField: UITextField?
     var scoreLabel: UILabel?
+    var enemy: [String] = []
     
     
     let canvasViewID = UUID().uuidString
@@ -32,7 +34,7 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
         
         canvasView.delegate = self
         canvasView.alwaysBounceVertical = true
-        canvasView.drawingPolicy = .anyInput
+        canvasView.drawingPolicy = .pencilOnly
         
         view.addSubview(canvasView)
         
@@ -43,7 +45,6 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
         
         setupHiddenTextField(in: view)
         scoreLabel(in: view)
-
     }
     
     func setupHiddenTextField(in view: UIView) {
@@ -76,10 +77,10 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
     }
     
     @objc
-        func handleTextFieldDidChange(_ textField: UITextField) {
-            print("Written text: \(textField.text ?? "")")
-        }
-  
+    func handleTextFieldDidChange(_ textField: UITextField) {
+        print("Written text: \(textField.text ?? "")")
+    }
+    
     
     private func updateWritingState(with state: WritingStateEnum) {
         gameVM.writingState = state
@@ -99,25 +100,14 @@ class DrawingViewController: UIViewController, PKCanvasViewDelegate {
             print("Hidden text field is nil or empty")
             return
         }
-        
-        print("Attempting to shoot text: \(theText)")
-        
-        if gameVM.sentences.contains(theText) {
-            print("Found \(theText) in sentences")
-            gameVM.sentences.removeAll { $0 == theText }
-            gameVM.currentScore += 1
-            print("Current score: \(gameVM.currentScore)")
-            refreshScore()
-        } else {
-            print("\(theText) not found in sentences")
-        }
+        gameVM.removeEnemy(for: theText)
+        refreshScore()
     }
     
     private func refreshScore() {
         scoreLabel?.text = "Correct: \(gameVM.currentScore)"
     }
-
-
+    
 }
 
 extension DrawingViewController: UIIndirectScribbleInteractionDelegate {
